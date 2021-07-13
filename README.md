@@ -5,7 +5,7 @@ Das hierzusehende Projekt dient dazu eine sehr einfache Sicherheitsanlage zu ers
 
 Collaborators: Marvin Timmerman, Felix Büntemeier, Hendrick Nessen & Leif Meyer
 
-Komponente:
+Hardware:
   * ESP8266 Lolin Wemos D1 Mini 
   * 2 Buttons
   * 2 Leds (Optional) 
@@ -15,6 +15,10 @@ Komponente:
   Möglicherweise mit Battery:
    * 1 D1 Mini Battery Shield
    * 1 LiPo Battery
+
+Software:
+ * Arduino 
+ * Node-RED
   
 Das Projekt muss ein Home Zustand und ein Away Zustand haben. 
   In diese Zustände kommt man indem man den Home Button oder Away Button betätigt.
