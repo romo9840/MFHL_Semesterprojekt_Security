@@ -3,6 +3,8 @@
 
 Das hierzusehende Projekt dient dazu eine sehr einfache Sicherheitsanlage zu erschaffen. 
 
+Collaborators: Marvin Timmerman, Felix Büntemeier, Hendrick Nessen & Leif Meyer
+
 Komponente:
   * ESP8266 Lolin Wemos D1 Mini 
   * 2 Buttons
