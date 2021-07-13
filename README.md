@@ -11,8 +11,8 @@ Komponente:
   * 1 Netzteil
   
   Möglicherweise mit Battery:
-    * 1 D1 Mini Battery Shield
-    * 1 LiPo Battery
+   * 1 D1 Mini Battery Shield
+   * 1 LiPo Battery
   
 Das Projekt muss ein Home Zustand und ein Away Zustand haben. 
   In diese Zustände kommt man indem man den Home Button oder Away Button betätigt.
