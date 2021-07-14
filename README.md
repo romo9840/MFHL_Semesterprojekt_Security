@@ -7,8 +7,9 @@ Collaborators: Marvin Timmerman, Felix Büntemeier, Hendrick Nessen & Leif Meyer
 
 Hardware:
   * ESP8266 Lolin Wemos D1 Mini 
-  * 2 Buttons
-  * 2 Leds (Optional) 
+  * ~~2 Buttons~~ 1 Button Shield
+  * 2 Leds 5V (Rot und Grün)
+  * 2 Resistors 200 Ohm (Subject to change)
   * 1 Bewegungssensor
   * 1 Netzteil
   
