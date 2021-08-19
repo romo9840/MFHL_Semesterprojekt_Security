@@ -12,6 +12,9 @@ const int pirPin = D1;        // Sensor Input von D1
 volatile boolean state = true;    //Volatile wegen Verwndung von Interrupt. True: Grün/Home; False: Rot/Away
 int buttonpressed = 0;            // Init von weitern Variabeln 
 int pirStat = 0; 
+int counter = 0;
+unsigned long STime = 0;
+unsigned long CTime = 0;
 
 //folgende Parameter anpassen. 
 //--------------------------------
@@ -89,7 +92,7 @@ void setup() {  //Nodered setup noch nötig
  pinMode(green, OUTPUT);  
  pinMode(pirPin, INPUT); 
  //Button als InteruptPin setzen der bei eine Signalaenderung Low -> High den ISR buttonpressed ausführt
- pinMode(btn, INPUT_PULLUP);
+ pinMode(btn, INPUT);
  attachInterrupt(digitalPinToInterrupt(btn), buttonpressed, RISING);
 //Initialisiert LEDs. BuiltinLED led ist aktiv LOW
  digitalWrite(led, HIGH);  
@@ -110,16 +113,25 @@ void buttonpressed(){
 // TO DO: Add timer logic
 void loop(){
 
-if(state == false){                       // if away
+while(state == false){                    // if away
   digitalWrite(green, LOW);               // Turn off green LED
   digitalWrite(red, HIGH);                // Turn on red LED
-  pirStat = digitalRead(pirPin);          // Check Bewegungsensor status (maybe doable through Interrupts)
   
- if (pirStat == HIGH) {                                // if motion detected
+  if(digitalRead(pirPin) == HIGH && counter == 0) {   // Allows time for the sensor to reset.
+    counter = 1;
+    STime = millis();
+    do {
+    CTime = millis() - STime;    
+    } while (CTime < 120000) // waits 2 mins.
+  }
+  
+  if (digitalRead(pirPin) == HIGH && counter == 1) {   // if motion detected
    Serial.println("Hey I got you!!!");                 // Send notification
    client.publish("MFHLSensor", "Hey I got you!!!");
-   delay(1000);
+   counter = 2;
   } 
+  
+ 
 // else {
 //   Serial.println("Where u at?!!!");   // turn LED OFF if we have no motion
 //   
@@ -128,6 +140,7 @@ if(state == false){                       // if away
  }
 
  if(state == true){                       // if home
+  counter = 0;
   digitalWrite(red, LOW);                 // Turn off red LED
   digitalWrite(green, HIGH);              // Turn on green LED
  }
