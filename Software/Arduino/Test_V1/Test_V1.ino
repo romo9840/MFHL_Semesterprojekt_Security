@@ -10,6 +10,7 @@ const int pirPin = D1;        // Sensor Input von D1
 boolean state = true;    
 int pirStat = 0; 
 int counter = 0;
+unsigned long timeToWait = 1200000;
 unsigned long STime = 0;
 unsigned long CTime = 0;
 
@@ -18,6 +19,7 @@ unsigned long CTime = 0;
 const char* ssid = "";
 const char* password = "";
 const char* mqtt_topic_subscribe1 = "MFHLSensor";
+const char* mqtt_topic_publish = "MFHLSensor";
 //--------------------------------
 
 //folgende vier Parameter nicht ändern
@@ -52,6 +54,7 @@ void setup_wifi() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+  publishString("Connected");
 }
 
 
@@ -69,6 +72,7 @@ void reconnect() {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.subscribe(mqtt_topic_subscribe1);
+ 
       
     } else {
       Serial.print("failed, rc=");
@@ -104,9 +108,11 @@ void setup() {  //Nodered setup noch nötig
  pinMode(pirPin, INPUT);
  pinMode(button.pin, INPUT); //Taster als Eingang setzten 
  digitalWrite(red, LOW); 
- digitalWrite(green, HIGH);  
-   
+ digitalWrite(green, HIGH);
+
  Serial.begin(115200);
+ setup_wifi();  
+ client.setServer(mqtt_server, mqtt_port);
 }
 
 
@@ -116,6 +122,11 @@ void setup() {  //Nodered setup noch nötig
 // -- If home/green sensor is ignored 
 // TO DO: Add timer logic
 void loop() {
+
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
     //Status des Tasters auslesen und als Wert (HIGH / LOW) setzen.
 
 button.currentState = digitalRead(button.pin);
@@ -149,22 +160,9 @@ button.currentState = digitalRead(button.pin);
       button.shortPressAmount = 0;
     }
   }
-}
 
-  void handleShortPress() {
-   Serial.println("short Press"); 
-   state = !state;
-   checkState();
- }
-
-
-  void handleLongPress() {
-  Serial.println("Long Press"); 
-  
-  }
-
-  void checkState(){
     if(state == true){
+      counter = 0;
       digitalWrite(green, HIGH);
       digitalWrite(red, LOW);
    
@@ -173,6 +171,41 @@ button.currentState = digitalRead(button.pin);
     if(state == false){
       digitalWrite(green, LOW);
       digitalWrite(red, HIGH);
-    }
+      Serial.println(counter);
+      if(counter == 0){   // Allows time for the sensor to reset.
+        STime = millis();
+        counter = 1;
+      }
+      if(counter == 1){ 
+        CTime = millis() - STime; 
+        if (CTime >= timeToWait){
+          counter = 2;
+          Serial.println("Counter = 2");
+         }
+      }
+
+    if (digitalRead(pirPin) == HIGH && counter == 2) {   // if motion detected
+    Serial.println("Hey I got you!!!");                 // Send notification
+    publishString("Hey I got you!!!");
+    counter = 3;
+     } 
   }
+}
+
+  void handleShortPress() {
+   Serial.println("short Press"); 
+   state = !state;
+ }
+
+
+  void handleLongPress() {
+  Serial.println("Long Press"); 
   
+  }
+ 
+
+    void publishString(String payload){
+    char payload_buff[payload.length() + 1];
+    payload.toCharArray(payload_buff, payload.length() + 1);
+    client.publish(mqtt_topic_publish, payload_buff);
+  }
