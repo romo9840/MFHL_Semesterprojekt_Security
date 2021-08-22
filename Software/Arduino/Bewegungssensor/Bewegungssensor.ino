@@ -185,7 +185,7 @@ button.currentState = digitalRead(button.pin);
 
     if (digitalRead(pirPin) == HIGH && counter == 2) {   // if motion detected
     Serial.println("Hey I got you!!!");                 // Send notification
-    publishString("Intrusion detected by " + " on ");
+    publishString("Intrusion detected by " + String(mqtt_topic_publish) + " on ");
     counter = 3;
      } 
   }
