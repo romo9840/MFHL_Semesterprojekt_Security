@@ -9,7 +9,7 @@ const int pirPin = D1;        // Sensor Input von D1
 boolean state = true;    
 int pirStat = 0; 
 int counter = 0;
-unsigned long timeToWait = 1200000;
+unsigned long timeToWait = 120000;
 unsigned long STime = 0;
 unsigned long CTime = 0;
 
@@ -188,6 +188,10 @@ button.currentState = digitalRead(button.pin);
     publishString("Intrusion detected by " + String(mqtt_topic_publish) + " on ");
     counter = 3;
      } 
+
+     if (digitalRead(pirPin) == LOW && counter == 3){
+      counter = 0;
+     }
   }
 }
 
