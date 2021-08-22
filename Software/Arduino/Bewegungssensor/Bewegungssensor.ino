@@ -6,17 +6,19 @@ const int red = D4;           // Rote led Output zu D4
 const int green = D2;         // Gruene led Output zu D2  
 const int pirPin = D1;        // Sensor Input von D1
 // Init von weitern Variabeln 
-boolean state = true;    
-int pirStat = 0; 
-int counter = 0;
-unsigned long timeToWait = 120000;
-unsigned long STime = 0;
-unsigned long CTime = 0;
+boolean state = true;              // True = "Home", False = "Away"  
+boolean nightMode = false;         // Nightmode mit Long Press (1 Sek -> LEDs ausschalten)
+int counter = 0;                   // Bei state = false, regelt timer-logik
+unsigned long timeToWait = 120000; // 2min Wartezeit sobald state=false
+unsigned long STime = 0;           // Für Zeitmessung
+unsigned long CTime = 0;           // "  "
 
+
+//----------NETWORK SETUP--------------//
 //folgende Parameter anpassen. 
 //--------------------------------
-const char* ssid = "";
-const char* password = "";
+const char* ssid = "21709Nwork";
+const char* password = "Leifmats2317";
 const char* mqtt_topic_subscribe1 = "MFHLSensor";
 const char* mqtt_topic_publish = "MFHLSensor";
 //--------------------------------
@@ -82,133 +84,142 @@ void reconnect() {
     }
   }
 }
+//----------NETWORK SETUP ENDE-------------//
 
-//---------------------------------------------
+//----------BUTTON CLASS-------------------//
+//  https://www.hackster.io/Spivey/wemos-d1-mini-esp8266-smart-iot-button-with-messagebird-dbef7e
+
 typedef struct Buttons {
-  const byte pin = D3;
-  const int debounce = 100;
-  const unsigned long shortPress = 100;
-  const unsigned long doublePress = 600;
-  const unsigned long  longPress = 1000;
+  const byte pin = D3;                    //Button pin definiert
+  const int debounce = 100;               //Delay nach Betätigung des Buttons
+  const unsigned long shortPress = 100;   //Festlegung der Druckdauer (für normale Betätigungen)
+  const unsigned long  longPress = 1000;  //"     " (für den Nachtmodus/LEDs Ausschalten)
 
-  unsigned long counter = 0;
-  int shortPressAmount = 0;
-  bool previousState = HIGH;
-  bool currentState;
+  unsigned long counter = 0;      //Zählt Dauer des Drucks        
+  bool previousState = HIGH;      //Vorheriger Zustand (Button ist active-low)
+  bool currentState;              //Aktueller Zustand
 } Button;
+
+//----------BUTTON CLASS ENDE-------------------//
 
 // create a Button variable type
 Button button;
 
-void setup() {  //Nodered setup noch nötig
- //Pinmodes setzen wie oben erwähnt 
- pinMode(red, OUTPUT); 
- pinMode(green, OUTPUT);  
- pinMode(pirPin, INPUT);
- pinMode(button.pin, INPUT); //Taster als Eingang setzten 
- digitalWrite(red, LOW); 
- digitalWrite(green, HIGH);
-
- Serial.begin(115200);
- setup_wifi();  
- client.setServer(mqtt_server, mqtt_port);
-}
-
-
-
-//Main method
-// -- If away/red sensor is activated
-// -- If home/green sensor is ignored 
-// TO DO: Add timer logic
-void loop() {
-
-  if (!client.connected()) {
-    reconnect();
-  }
-  client.loop();
-    //Status des Tasters auslesen und als Wert (HIGH / LOW) setzen.
-
-button.currentState = digitalRead(button.pin);
-
-  if (button.currentState != button.previousState) {
-    delay(button.debounce);
-    // update status in case of bounce
-    button.currentState = digitalRead(button.pin);
-    if (button.currentState == LOW) {
-      button.counter = millis();
-    }
-    else if (button.currentState == HIGH) {
-      unsigned long currentMillis = millis();
-
-      if ((currentMillis - button.counter >= button.shortPress) && !(currentMillis - button.counter >= button.longPress)) {
-        // short press detected, add press to amount
-        button.shortPressAmount++;
-      }
-      else if ((currentMillis - button.counter >= button.longPress)) {
-        // long press was detected
-        handleLongPress();
-      }
-    }
-    button.previousState = button.currentState;
-  }
-
-  else if (button.shortPressAmount == 1) {
-    unsigned long currentMillis = millis();
-    if (currentMillis - button.counter >= button.doublePress) {
-      handleShortPress();
-      button.shortPressAmount = 0;
-    }
-  }
-
-    if(state == true){
-      counter = 0;
-      digitalWrite(green, HIGH);
-      digitalWrite(red, LOW);
-   
-    }
-
-    if(state == false){
-      digitalWrite(green, LOW);
-      digitalWrite(red, HIGH);
-      Serial.println(counter);
-      if(counter == 0){   // Allows time for the sensor to reset.
-        STime = millis();
-        counter = 1;
-      }
-      if(counter == 1){ 
-        CTime = millis() - STime; 
-        if (CTime >= timeToWait){
-          counter = 2;
-          Serial.println("Counter = 2");
-         }
-      }
-
-    if (digitalRead(pirPin) == HIGH && counter == 2) {   // if motion detected
-    Serial.println("Hey I got you!!!");                 // Send notification
-    publishString("Intrusion detected by " + String(mqtt_topic_publish) + " on ");
-    counter = 3;
-     } 
-
-     if (digitalRead(pirPin) == LOW && counter == 3){
-      counter = 0;
-     }
-  }
-}
-
-  void handleShortPress() {
-   Serial.println("short Press"); 
-   state = !state;
+//----------EXTRA METHODEN-------------------//
+void handleShortPress() {           
+    Serial.println("short Press"); 
+    state = !state;
  }
 
 
   void handleLongPress() {
-  Serial.println("Long Press"); 
+    Serial.println("Long Press"); 
+    digitalWrite(green, LOW);
+    digitalWrite(red, LOW);
+    nightMode = !nightMode;
   
-  }
+ }
  
-
-    void publishString(String payload){
+  void publishString(String payload){               
     char payload_buff[payload.length() + 1];
     payload.toCharArray(payload_buff, payload.length() + 1);
     client.publish(mqtt_topic_publish, payload_buff);
+ }
+
+//----------EXTRA METHODEN ENDE-------------------//
+
+//----------SETUP-------------------//
+void setup() {  
+ pinMode(red, OUTPUT);        // Rote LED
+ pinMode(green, OUTPUT);      // Grüne LED
+ pinMode(pirPin, INPUT);      // Bewegungsensor
+ pinMode(button.pin, INPUT);  // Taster als Eingang setzten 
+ digitalWrite(red, LOW);      // Rote LED aus
+ digitalWrite(green, HIGH);   // Grüne LED an
+
+ Serial.begin(115200);
+
+ setup_wifi();                
+ client.setServer(mqtt_server, mqtt_port);
+}
+//----------SETUP ENDE-------------------//
+
+
+//----------LOOP METHODE-------------------//
+// -- Falls "Away" Sensordaten werden wahrgenommen
+// -- Falls "Home" Sensordaten werden ignoriert
+// Buttonlogik von Spivey (link oben)
+
+void loop() {
+
+  if (!client.connected()) {        // Erkennt Verbindungsverlust
+    reconnect();
   }
+  client.loop();
+  
+//--Buttonlogik--//
+button.currentState = digitalRead(button.pin);          // Erfasst Buttonzustand
+
+  if (button.currentState != button.previousState) {    // Prüft ob aktueller Zustand mit dem voherigen Zustand nicht übereinstimmt
+    delay(button.debounce);                             // Delay
+    button.currentState = digitalRead(button.pin);      // Erfasst Buttonzustand erneut
+    if (button.currentState == LOW) {                   // Falls Button gedrückt wird Zähler mit millis gestartet
+      button.counter = millis();
+    } 
+    else if (button.currentState == HIGH) {            // Falls Button nicht gedrückt/losgelassen, wird aktuelle Zeit erfasst
+      unsigned long currentMillis = millis();          
+
+      if ((currentMillis - button.counter >= button.shortPress) && !(currentMillis - button.counter >= button.longPress)) {
+        // Falls ein Button kurz betätigt wird
+        handleShortPress();
+      }
+      else if ((currentMillis - button.counter >= button.longPress)) {
+        // Falls ein Button länger als 1 Sekunde betätigt wird
+        handleLongPress();
+      }
+    }
+    button.previousState = button.currentState;      // Voheriger Zustand wird mit dem aktuellen überschrieben
+  }
+//--Ende Buttonlogik--//
+
+//--Sensorlogik--//
+    if(state == true){              // Falls "Home" Sensordaten werden ignoriert; Grüne LED leuchtet            
+      counter = 0;                  // Zähler zurückgesetzt
+      if(nightMode == false){
+        digitalWrite(green, HIGH);
+        digitalWrite(red, LOW);
+      }
+    }
+
+    if(state == false){           // Falls "Away" Sensordaten werden wahrgenommen; Rote LED leuchtet
+      if(nightMode == false){
+        digitalWrite(green, LOW);
+        digitalWrite(red, HIGH);
+      }
+      if(counter == 0){           // counter = 0 -> Startzeit erfasst für 2min Timer dann counter = 1
+        STime = millis();
+        counter = 1;  
+        Serial.println("Counter = 1; Startzeit erfasst");           
+      }
+      if(counter == 1){          // counter = 1 -> Berechnet ob 2min überschritten. Falls ja counter = 2
+        CTime = millis() - STime;     
+        if (CTime >= timeToWait){
+          counter = 2;
+          Serial.println("Counter = 2; 2min überschritten");
+         }
+      }
+
+    if (digitalRead(pirPin) == HIGH && counter == 2) {   //counter = 2 -> Erfasst Bewegungsensordaten.  
+      // Falls Bewegung erfasst wird Nachricht an Node-RED gesendet (weitergeleitet auf Discord und Email)
+      Serial.println("Hey I got you!!!; Counter = 3");                 
+      publishString("Intrusion detected by " + String(mqtt_topic_publish) + " on ");
+      counter = 3;
+     } 
+
+     if (digitalRead(pirPin) == LOW && counter == 3){ //counter = 3 -> Falls keine weitere Bewegung erkannt, wird Zähler zurückgesetzt
+      counter = 0;
+     }
+  }
+//--Ende Sensorlogik--//
+}
+//----------ENDE LOOP METHODE-------------------//
