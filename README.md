@@ -3,7 +3,7 @@
 
 Das hierzusehende Projekt dient dazu eine sehr einfache Sicherheitsanlage zu erschaffen. 
 
-Collaborators: Marvin Timmerman, Felix Büntemeier, Hendrick Nessen & Leif Meyer
+Collaborators: Marvin Timmerman, Felix Büntemeier, Hendrik Nessen & Leif Meyer
 
 Hardware:
   * ESP8266 Lolin Wemos D1 Mini 
@@ -21,8 +21,8 @@ Software:
  * Arduino 
  * Node-RED
   
-Das Projekt muss ein Home Zustand und ein Away Zustand haben. 
-  In diese Zustände kommt man indem man den Home Button oder Away Button betätigt.
+Das Projekt muss über einen "Home" sowie "Away" Zustand verfügen.
+Den Zugang zu diesen Zuständen erreicht man durch das Betätigen des integrierten Buttons.
 
 Das Projekt muss im Away Zustand Bewegung für 5-10 Sekunden erkennen und dann ein Timer auslösen für 1 Minute. 
   * Falls der Timer abläuft wird eine Mail oder Discord Benachrichtigung verschickt.
