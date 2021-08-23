@@ -29,7 +29,7 @@ Nach einmaligem Betätigen des Buttons wird der Zustand "Away" erreicht.
   * Der Timer beginnt und stoppt bei einer Dauer von 2 Minuten.
   * Nachdem der Timer abgelaufen ist, erfasst der Sensor jede Bewegung.
   * Nachdem eine Bewegung erkannt wurde, wird umgehend eine Benachrichtung an Discord sowie Email versandt.
-  * Innerhalb der Zustände kann ein Wechsel ausnahmslos durch Betätigen des Buttons inziiert werden.
+  * Innerhalb der Zustände kann ein Wechsel ausnahmslos durch Betätigen des Buttons initiiert werden.
 
 Das Sicherheitssystem wird im "Home" Zustand lediglich in Bereitsschaft versetzt. Hier wird nur das auf Betätigen des Buttons reagiert.
  * Die grüne LED leuchtet permanent auf.
