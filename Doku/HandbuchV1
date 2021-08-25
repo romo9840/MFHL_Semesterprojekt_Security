@@ -1,0 +1,39 @@
+Handbuch „Sicherheitsystem“
+
+Inbetriebnahme:
+
+1.	Installation des Sicherheitssystems
+Schließen Sie das Sicherheitssystem mit dem im Lieferumfang enthaltenen Micro-USB Kabel an das Stromnetz an, um die Inbetriebnahme zu starten.
+Sobald das Sicherheitssystem mit dem Strom verbunden wurde, leuchtet die grüne LED auf. 
+Das Sicherheitssystem befindet sich nun im „Home-Modus“.
+Durch das Betätigen des Home-Buttons wird der „Away-Modus“ aktiviert. 
+Die rote LED leuchtet auf. Das Wechseln der Modi ist jederzeit durch Betätigen des Home-Buttons möglich.
+Das Sicherheitssystem ist nun einsatzbereit.
+
+BILD!
+
+2.	Installation des Benachrichtigungssystems
+2.1 Email-Benachrichtigung
+Um vom Benachrichtigungssystem entsprechende Warnmeldungen zu erhalten, muss eine Verbindung zum Email- sowie Discord-Server hergestellt werden. 
+Verwenden sie die Email-App ihres Mobiltelefons oder eines Heimrechners um sich mit der beigefügten Email-Adresse zu verbinden (MFHL-Projekt@abc.de). 
+
+2.2	Discord-Benachrichtigung:
+Um sich mit dem Sicherheitsserver zu verbinden laden sie die benötigte Software „Discord“ unter der Webseite (www.Discord.de) herunter.
+Nach erfolgreicher Installation können Sie den Sicherheitsserver hinzufügen, indem sie auf die Schaltfläche „Server hinzufügen klicken“. 
+Navigieren Sie anschließend zu der Schaltfläche „Tritt einem Server bei“. 
+Nach Eingabe des Einladungslinks (abcdef.ff.f) betreten Sie den Sicherheitsserver.
+Das Benachrichtigungssystem ist nun einsatzbereit.
+
+
+
+Home-Modus: In diesem Zustand reagiert das Sicherheitssystem auf keine Bewegung. 
+Vorzugsweise sollte dieser Modus aktiviert werden, wenn Sie sich zu Hause befinden.
+BILD
+
+Away-Modus: Nach einer Sicherheitsdauer von 2 Minuten wird die Bewegungserfassung des Sicherheitssystems aktiviert. 
+Sollte das Sicherheitssystem eine Bewegung erkennen, wird eine Warnmeldung durch das Benachrichtigungssystem eingeleitet. 
+BILD
+
+Known-Issues:
+
+Videomaterial zur Inbetriebnahme:

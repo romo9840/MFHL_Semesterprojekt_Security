@@ -3,7 +3,7 @@
 
 Das hierzusehende Projekt dient dazu eine sehr einfache Sicherheitsanlage zu erschaffen. 
 
-Collaborators: Marvin Timmerman, Felix Büntemeier, Hendrick Nessen & Leif Meyer
+Collaborators: Marvin Timmerman, Felix Büntemeier, Hendrik Nessen & Leif Meyer
 
 Hardware:
   * ESP8266 Lolin Wemos D1 Mini 
@@ -21,14 +21,16 @@ Software:
  * Arduino 
  * Node-RED
   
-Das Projekt muss ein Home Zustand und ein Away Zustand haben. 
-  In diese Zustände kommt man indem man den Home Button oder Away Button betätigt.
+Das Sicherheitssystem muss über einen "Home" sowie "Away" Zustand verfügen.
+Den Zugang zu diesen Zuständen erreicht man durch das Betätigen des integrierten Buttons.
 
-Das Projekt muss im Away Zustand Bewegung für 5-10 Sekunden erkennen und dann ein Timer auslösen für 1 Minute. 
-  * Falls der Timer abläuft wird eine Mail oder Discord Benachrichtigung verschickt.
-  * Falls der Home Button gedrückt wird, passiert nichts weiteres.
-  * Soll Rote LED leuchten lassen.
+Nach einmaligem Betätigen des Buttons wird der Zustand "Away" erreicht.
+  * Die grüne LED erlischt und die rote LED permanent auf.
+  * Der Timer beginnt und stoppt bei einer Dauer von 2 Minuten.
+  * Nachdem der Timer abgelaufen ist, erfasst der Sensor jede Bewegung.
+  * Nachdem eine Bewegung erkannt wurde, wird umgehend eine Benachrichtung an Discord sowie Email versandt.
+  * Innerhalb der Zustände kann ein Wechsel ausnahmslos durch Betätigen des Buttons initiiert werden.
 
-Das Projekt muss im Home Zustand einfach nur bereit sein in dem Away Zustand zu wechseln falls Button betätigt wird.
- * Soll Grüne LED leuchen lassen. 
+Das Sicherheitssystem wird im "Home" Zustand lediglich in Bereitsschaft versetzt. Hier wird nur das auf Betätigen des Buttons reagiert.
+ * Die grüne LED leuchtet permanent auf.
   
