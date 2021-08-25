@@ -38,27 +38,27 @@
             <depend id="8" type="2" difference="0" hardness="Strong"/>
             <depend id="43" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="2" name="Verteilung von Aufgaben und Verantwortlichkeiten" color="#8cb6ce" meeting="false" start="2021-07-06" duration="1" complete="0" thirdDate="2021-07-05" thirdDate-constraint="1" expand="true">
+        <task id="2" name="Verteilung von Aufgaben und Verantwortlichkeiten" color="#8cb6ce" meeting="false" start="2021-07-06" duration="1" complete="0" thirdDate="2021-07-05" thirdDate-constraint="0" expand="true">
             <depend id="5" type="2" difference="0" hardness="Strong"/>
             <depend id="43" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="5" name="Aufgaben und Verantwortlichkeiten verteilt" color="#8cb6ce" meeting="true" start="2021-07-07" duration="0" complete="0" thirdDate="2021-07-05" thirdDate-constraint="0" expand="true">
             <depend id="15" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="8" name="Ideenfindung" color="#8cb6ce" meeting="false" start="2021-07-06" duration="1" complete="0" thirdDate="2021-07-05" thirdDate-constraint="1" expand="true">
+        <task id="8" name="Ideenfindung" color="#8cb6ce" meeting="false" start="2021-07-06" duration="1" complete="0" thirdDate="2021-07-05" thirdDate-constraint="0" expand="true">
             <depend id="12" type="2" difference="0" hardness="Strong"/>
             <depend id="43" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="12" name="Idee gefunden" color="#8cb6ce" meeting="true" start="2021-07-07" duration="0" complete="0" thirdDate="2021-07-05" thirdDate-constraint="0" expand="true">
             <depend id="21" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="15" name="Dokumentation" color="#8cb6ce" meeting="false" start="2021-07-07" duration="42" complete="0" thirdDate="2021-07-05" thirdDate-constraint="1" expand="true">
+        <task id="15" name="Dokumentation" color="#8cb6ce" meeting="false" start="2021-07-07" duration="42" complete="0" thirdDate="2021-07-05" thirdDate-constraint="0" expand="true">
             <depend id="18" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="18" name="Doku fertig" color="#8cb6ce" meeting="true" start="2021-09-03" duration="0" complete="0" thirdDate="2021-07-05" thirdDate-constraint="0" expand="true">
             <depend id="39" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="21" name="Hardware-Entwicklung" color="#8cb6ce" meeting="false" start="2021-07-07" duration="10" complete="0" thirdDate="2021-07-05" thirdDate-constraint="1" expand="true">
+        <task id="21" name="Hardware-Entwicklung" color="#8cb6ce" meeting="false" start="2021-07-07" duration="10" complete="0" thirdDate="2021-07-05" thirdDate-constraint="0" expand="true">
             <depend id="24" type="2" difference="0" hardness="Strong"/>
             <depend id="43" type="2" difference="0" hardness="Strong"/>
         </task>
@@ -66,12 +66,12 @@
             <depend id="27" type="2" difference="0" hardness="Strong"/>
             <depend id="33" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="27" name="3D-Modellierung" color="#8cb6ce" meeting="false" start="2021-07-21" duration="12" complete="0" thirdDate="2021-07-05" thirdDate-constraint="1" expand="true">
+        <task id="27" name="3D-Modellierung" color="#8cb6ce" meeting="false" start="2021-07-21" duration="24" complete="0" thirdDate="2021-07-05" thirdDate-constraint="1" expand="true">
             <depend id="30" type="2" difference="0" hardness="Strong"/>
             <depend id="43" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="30" name="3D-Modell fertig" color="#8cb6ce" meeting="true" start="2021-08-06" duration="0" complete="0" thirdDate="2021-07-05" thirdDate-constraint="0" expand="true"/>
-        <task id="33" name="Software-Entwicklung" color="#8cb6ce" meeting="false" start="2021-07-21" duration="25" complete="0" thirdDate="2021-07-05" thirdDate-constraint="1" expand="true">
+        <task id="30" name="3D-Modell fertig" color="#8cb6ce" meeting="true" start="2021-08-24" duration="0" complete="0" thirdDate="2021-07-05" thirdDate-constraint="0" expand="true"/>
+        <task id="33" name="Software-Entwicklung" color="#8cb6ce" meeting="false" start="2021-07-21" duration="25" complete="0" thirdDate="2021-07-05" thirdDate-constraint="0" expand="true">
             <depend id="36" type="2" difference="0" hardness="Strong"/>
             <depend id="43" type="2" difference="0" hardness="Strong"/>
         </task>
