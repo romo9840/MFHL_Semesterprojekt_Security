@@ -17,7 +17,7 @@ unsigned long CTime = 0;           // "  "
 //----------NETWORK SETUP--------------//
 //folgende Parameter anpassen. 
 //--------------------------------
-const char* ssid = ""
+const char* ssid = "";
 const char* password = "";
 const char* mqtt_topic_subscribe1 = "MFHLSensor";
 const char* mqtt_topic_publish = "MFHLSensor";
