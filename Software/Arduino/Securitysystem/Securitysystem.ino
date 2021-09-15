@@ -208,19 +208,19 @@ button.currentState = digitalRead(button.pin);          // Erfasst Buttonzustand
           Serial.println("Counter = 2; 2min überschritten");
          }
       }
-      if(digitalRead(pirPin) == LOW && counter == 2){
+      if(digitalRead(pirPin) == LOW && counter == 2){  //counter = 2 -> wartet bis Bewegungsensor auf Low
           counter = 3;
           Serial.println("Counter = 3 Sensor Calibration Complete");  
       }
 
-    if (digitalRead(pirPin) == HIGH && counter == 3) {   //counter = 2 -> Erfasst Bewegungsensordaten.  
+    if (digitalRead(pirPin) == HIGH && counter == 3) {   //counter = 3 -> Erfasst Bewegungsensordaten.  
       // Falls Bewegung erfasst wird Nachricht an Node-RED gesendet (weitergeleitet auf Discord und Email)
       Serial.println("Hey I got you!!!; Counter = 4");                 
       publishString("Intrusion detected by " + String(mqtt_topic_publish) + " on ");
       counter = 4;
      } 
 
-     if (digitalRead(pirPin) == LOW && counter == 4){ //counter = 3 -> Falls keine weitere Bewegung erkannt, wird Zähler zurückgesetzt
+     if (digitalRead(pirPin) == LOW && counter == 4){ //counter = 4 -> Falls keine weitere Bewegung erkannt, wird Zähler zurückgesetzt
       counter = 0;
      }
   }
