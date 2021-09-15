@@ -1,7 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
       
-const int red = D4;           // Rote led Output zu D4   
+const int red = D6;           // Rote led Output zu D4   
 // Taster Input von D3 später in Button Klasse 
 const int green = D2;         // Gruene led Output zu D2  
 const int pirPin = D1;        // Sensor Input von D1
@@ -208,15 +208,19 @@ button.currentState = digitalRead(button.pin);          // Erfasst Buttonzustand
           Serial.println("Counter = 2; 2min überschritten");
          }
       }
+      if(digitalRead(pirPin) == LOW && counter == 2){
+          counter = 3;
+          Serial.println("Counter = 3 Sensor Calibration Complete");  
+      }
 
-    if (digitalRead(pirPin) == HIGH && counter == 2) {   //counter = 2 -> Erfasst Bewegungsensordaten.  
+    if (digitalRead(pirPin) == HIGH && counter == 3) {   //counter = 2 -> Erfasst Bewegungsensordaten.  
       // Falls Bewegung erfasst wird Nachricht an Node-RED gesendet (weitergeleitet auf Discord und Email)
-      Serial.println("Hey I got you!!!; Counter = 3");                 
+      Serial.println("Hey I got you!!!; Counter = 4");                 
       publishString("Intrusion detected by " + String(mqtt_topic_publish) + " on ");
-      counter = 3;
+      counter = 4;
      } 
 
-     if (digitalRead(pirPin) == LOW && counter == 3){ //counter = 3 -> Falls keine weitere Bewegung erkannt, wird Zähler zurückgesetzt
+     if (digitalRead(pirPin) == LOW && counter == 4){ //counter = 3 -> Falls keine weitere Bewegung erkannt, wird Zähler zurückgesetzt
       counter = 0;
      }
   }
