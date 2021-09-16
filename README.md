@@ -8,8 +8,8 @@ Collaborators: Marvin Timmerman, Felix Büntemeier, Hendrik Nessen & Leif Meyer
 Hardware:
   * ESP8266 Lolin Wemos D1 Mini 
   * ~~2 Buttons~~ ESP8266 Button Shield
-  * Zwei Leds 5V (Rot und Grün)
-  * ~~2 Resistors 200 Ohm (Subject to change)~~
+  * Zwei LEDs 5mm (Rot und Grün)
+  * 1 Widerstand 330 Ohm 
   * Ein PIR Bewegungssensor
   * Ein Netzteil
   
@@ -33,4 +33,6 @@ Nach einmaligem Betätigen des Buttons wird der Zustand "Away" erreicht.
 
 Das Sicherheitssystem wird im "Home" Zustand lediglich in Bereitsschaft versetzt. Hier wird nur das auf Betätigen des Buttons reagiert.
  * Die grüne LED leuchtet permanent auf.
+
+Nach längeren Betätigung des Buttons wird der Nachtmodus aufgerufen. Dabei erlöscht die aktuelle LED. 
   
